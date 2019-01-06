@@ -5,7 +5,7 @@
   "author": "cristian.jora <cristian.jora@corebuild.eu>",
   "private": true,
   "scripts": {
-    "dev": "cross-env ENABLE_ESLINT=true node build/dev-server.js",
+    "dev": "cross-env ENABLE_ESLINT=false node build/dev-server.js",
     "build": "cross-env ENABLE_ESLINT=true node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --watch",
@@ -13,6 +13,7 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "chartist": "^0.11.0",
     "easy-pie-chart": "^2.1.7",
     "element-ui": "^2.0.3",
@@ -23,12 +24,16 @@
     "perfect-scrollbar": "0.7.1",
     "sweetalert2": "^6.11.4",
     "vee-validate": "^2.0.0-rc.21",
+    "velocity-animate": "^1.5.2",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.4",
     "vue-clickaway": "^2.1.0",
     "vue-form-wizard": "^0.7.0",
     "vue-nav-tabs": "^0.5.4",
     "vue-notifyjs": "^0.2.0",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.4.0",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
