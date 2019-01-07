@@ -40,7 +40,7 @@
     props: {
       title: {
         type: String,
-        default: 'Paper Dashboard Pro'
+        default: 'Bookmarks'
       },
       type: {
         type: String,

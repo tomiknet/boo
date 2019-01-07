@@ -2,6 +2,7 @@ import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
 // GeneralViews
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Dashboard pages
+import Dashboard from 'src/components/Dashboard/Views/Dashboard/Dashboard.vue'
 import Overview from 'src/components/Dashboard/Views/Dashboard/Overview.vue'
 import Stats from 'src/components/Dashboard/Views/Dashboard/Stats.vue'
 
@@ -203,6 +204,11 @@ const routes = [
         path: 'calendar',
         name: 'Calendar',
         component: Calendar
+      },
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: Dashboard
       },
       {
         path: 'charts',

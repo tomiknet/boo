@@ -2,7 +2,7 @@
   <div class="wrapper">
 
     <side-bar type="sidebar" :sidebar-links="$sidebar.sidebarLinks">
-      <user-menu></user-menu>
+      <!--<user-menu></user-menu>-->
       <form class="navbar-form navbar-left navbar-search-form navbar-search-form-mobile" role="search">
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-search"></i></span>

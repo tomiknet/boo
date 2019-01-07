@@ -21,10 +21,9 @@
         </ul>
       </nav>
       <div class="copyright pull-right">
-        &copy; Coded with
+        &copy; 2019 Bookmarks, Inc.
         <i class="fa fa-heart heart"></i> by
-        <a href="https://github.com/cristijora" target="_blank">Cristi Jora</a>.
-        <span>Designed by <a href="https://www.creative-tim.com/?ref=pdf-vuejs" target="_blank">Creative Tim</a>.</span>
+        <a href="https://github.com/tomiknet" target="_blank">Tomik</a>.
       </div>
     </div>
   </footer>

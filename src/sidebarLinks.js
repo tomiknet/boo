@@ -1,6 +1,12 @@
 export default [
   {
     name: 'Dashboard',
+    icon: 'ti-calendar',
+    path: '/dashboard'
+  },
+    /*
+  {
+    name: 'Dashboard',
     icon: 'ti-panel',
     collapsed: false,
     children: [{
@@ -135,4 +141,5 @@ export default [
     }
     ]
   }
+  */
 ]
