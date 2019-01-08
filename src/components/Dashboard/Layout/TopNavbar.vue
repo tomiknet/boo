@@ -17,25 +17,27 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <!--<li class="open">
+          <li class="open">
             <router-link to="/admin/stats" class="dropdown-toggle btn-magnify" data-toggle="dropdown">
               <i class="ti-panel"></i>
               <p>Stats</p>
             </router-link>
-          </li>-->
-          <drop-down tag="li" title="5" icon="ti-bell">
+          </li>
+            <drop-down tag="li" title="5" icon="ti-bell">
             <li><a href="#">Notification 1</a></li>
             <li><a href="#">Notification 2</a></li>
             <li><a href="#">Notification 3</a></li>
             <li><a href="#">Notification 4</a></li>
             <li><a href="#">Another notification</a></li>
-          </drop-down>
+            </drop-down>
           <li>
+            <div class="text-xs-center">
             <v-menu
                     v-model="menu"
                     class="user"
                     :close-on-content-click="false"
                     :nudge-width="200"
+                    offset-y
             >
               <v-card
                       slot="activator"
@@ -43,15 +45,15 @@
                       img="https://cdn.vuetifyjs.com/images/cards/girl.jpg"
               ></v-card>
 
-              <v-card>
+              <v-card class="menu">
                 <v-list>
                   <v-list-tile avatar>
                     <v-list-tile-avatar>
-                      <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                      <img src="https://cdn.vuetifyjs.com/images/cards/girl.jpg" alt="Jane">
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                      <v-list-tile-title>John Leider</v-list-tile-title>
+                      <v-list-tile-title>Jane Leider</v-list-tile-title>
                       <v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>
                     </v-list-tile-content>
 
@@ -74,25 +76,30 @@
                     <v-list-tile-action>
                       <v-switch v-model="message" color="purple"></v-switch>
                     </v-list-tile-action>
-                    <v-list-tile-title>Enable messages</v-list-tile-title>
+                    <v-list-tile-title>Lock Screen</v-list-tile-title>
                   </v-list-tile>
 
                   <v-list-tile>
                     <v-list-tile-action>
                       <v-switch v-model="hints" color="purple"></v-switch>
                     </v-list-tile-action>
-                    <v-list-tile-title>Enable hints</v-list-tile-title>
+                    <v-list-tile-title>Display #nsfw</v-list-tile-title>
                   </v-list-tile>
                 </v-list>
 
-                <v-card-actions>
-                  <v-spacer></v-spacer>
+                <v-list>
+                  <v-list-tile
+                          v-for="(item, index) in items"
+                          :key="index"
+                          @click=""
+                  >
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
 
-                  <v-btn flat @click="menu = false">Cancel</v-btn>
-                  <v-btn color="primary" flat @click="menu = false">Save</v-btn>
-                </v-card-actions>
               </v-card>
             </v-menu>
+            </div>
           </li>
           <!--<li>
             <router-link to="/admin/overview" class="btn-rotate">
@@ -114,7 +121,13 @@
   export default {
     data () {
       return {
-        activeNotifications: false
+        activeNotifications: false,
+        items: [
+          { title: 'My Profile' },
+          { title: 'Edit Porofile' },
+          { title: 'Settings' },
+          { title: 'Logout' }
+        ]
       }
     },
     methods: {

@@ -305,6 +305,16 @@
   margin-top: 20px;
   padding-bottom: 20px;
 
+  .v-menu__content{
+    left:-200px!important;
+    top:50px!important;
+  }
+
+  .hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
   &:after{
     content: "";
     position: absolute;
