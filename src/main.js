@@ -9,6 +9,7 @@ import App from './App.vue'
 import { store } from './store/store'
 import Vuetify from 'vuetify'
 import velocity from 'velocity-animate'
+import moment from 'moment'
 
 // Plugins
 import GlobalComponents from './gloablComponents'

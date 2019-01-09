@@ -20,6 +20,10 @@
                             </div>
                             <v-layout align-center justify-space-between row style="width: 100%;">
                                 <div class="upcoming-events-filter-group">
+                                    <div v-for="(tag, index) in tags"> 
+                                        <input type="radio" id="tagSelect" name="tag-select" :value="tag.name" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
+                                        <label for="tagSelect">{{ tag.name }}</label>
+                                    </div>
                                     <input type="radio" id="importantSelect" name="important-select" value="important" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
                                     <label for="importantSelect">Important</label>
                                     <input type="radio" id="upcomingSelect" name="upcoming-select" value="upcoming" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
@@ -70,6 +74,15 @@
                     search: ''
                 },
 
+            }
+        },
+        mounted () {
+            this.$store.dispatch('loadTags');
+            this.$store.dispatch('loadBookmarks');
+        },
+        computed: {
+            tags() {
+               return this.$store.getters.tagList;
             }
         },
         methods: {
