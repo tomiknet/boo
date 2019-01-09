@@ -16,7 +16,13 @@ export const store = new Vuex.Store({
     loadBookmarks ({ commit }) {
       axios.post('http://book.noviny.live/db/index.php', {
         request: 'SELECT',
-        query: 'SELECT * FROM book_bookmarks'
+        query: `SELECT b.*, 
+                (SELECT COUNT(ID) FROM book_r_visits WHERE bookmark_id = b.ID ) AS bookmark_visits, 
+                (SELECT concat(day, '.', month, '.', year) AS bookmark_lastvisit FROM book_r_visits WHERE bookmark_id = b.ID ORDER BY year,month,day DESC LIMIT 1 ) AS bookmark_lastvisit
+                FROM book_r_bookmarks AS a
+                LEFT JOIN book_bookmarks AS b ON a.bookmark_id=b.ID
+                WHERE a.user_id=1
+                `
       }).then((response) => {
         commit('SET_BOOKMARKS', response.data)
     })
@@ -28,6 +34,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     SET_BOOKMARKS (state, response) {
+      console.log(response);
       state.bookmarks = response
     }
   },
