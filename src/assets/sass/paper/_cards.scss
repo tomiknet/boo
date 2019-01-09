@@ -34,7 +34,7 @@
     }
 
     .card-header{
-//         padding: 15px 15px 0px;
+        //         padding: 15px 15px 0px;
         padding: 20px 15px 0px;
         position: relative;
         border-radius: $border-radius-small-top;
@@ -154,7 +154,7 @@
         border-radius: $border-radius-base;
 
         &.map-big{
-          height: 420px;
+            height: 420px;
         }
     }
 
@@ -610,5 +610,198 @@
 }
 
 .card-content .ct-chart {
-  min-height: 210px;
+    min-height: 210px;
+}
+/* Event Card List CSS */
+.event-card-list {
+    margin-top: 0em;
+    padding-left: 0px;
+}
+
+.event-card-list li {
+    list-style: none;
+    margin: 2em 0;
+}
+
+.event-card-text {
+    padding: 0.8em 1.3em;
+}
+
+.event-card {
+    overflow: hidden;
+    width: 800px;
+
+    border-radius: 0.3em;
+}
+
+.event-card img {
+    width: 280px;
+    height: 200px;
+
+    object-fit: cover;
+}
+
+.event-card .name {
+    font-size: 2.3em;
+    font-weight: 400;
+}
+
+.event-card .name a {
+    text-decoration: none;
+    /*color: #212121;*/
+}
+
+.event-card .date {
+    font-size: 1.4em;
+    font-weight: 400;
+    color: #6D6D6D;
+}
+
+.event-card .v-chip {
+    height:16px;
+    float:left;
+}
+
+.event-card .created{
+    color: #9A9A9A;
+    font-size: 1em;
+    float:right;
+    padding-right: 1em;
+}
+
+.event-card .lasvisit{
+    color: #9A9A9A;
+    font-size: 1em;
+    float:right;
+    padding-right: 1em;
+}
+
+.event-card .desc {
+    margin-bottom: 0.2em;
+    font-size: 1.16em;
+    padding-left: 0.1em;
+}
+
+.event-card .hits {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid #FFFFFF;
+    border-radius: 30px;
+    color: #FFFFFF;
+    height: 50px;
+    font-weight: 600;
+    margin: 17px 0px;
+    min-width: 50px;
+    padding: 6px;
+    line-height: 34px;
+    text-align: center;
+}
+
+.event-card .date-ribbon {
+    position: absolute;
+    top: 0;
+    left: 2em;
+    background: #FE453E;
+    color: #fff;
+    padding: 0.2em 0.6em;
+    padding-bottom: 0;
+    border-radius: 0;
+}
+
+.event-card .date-ribbon::before, .event-card .date-ribbon::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+
+    width: 50%;
+    height: 30px;
+}
+
+.event-card .date-ribbon::before {
+    left: 0;
+    border-left:solid 2em #FE453E;
+    border-top: solid 15px #FE453E;
+    border-bottom: solid 15px transparent;
+    border-right: solid 2em transparent;
+}
+
+.event-card .date-ribbon::after {
+    right: 0;
+    border-right:solid 2em #FE453E;
+    border-top: solid 15px #FE453E;
+    border-bottom: solid 15px transparent;
+    border-left: solid 2em transparent;
+}
+
+.event-card .date-ribbon h2 {
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.07em;
+    text-align: center;
+}
+
+.event-card .date-ribbon h1 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 2.45em;
+    margin-top: -0.09em;
+    line-height: 1em;
+}
+/* Below is page css. Not event card */
+
+.wrapme {
+    width: 80%;
+    max-width: 1000px;
+}
+
+.search-bar {
+    background: #fff;
+    padding: 1em;
+    width: 100%;
+    border-radius: 0em;
+
+    transition: box-shadow 300ms ease;
+}
+
+.search-bar input {
+    width: 100%;
+    border-style: none;
+
+    color: inherit;
+    background-color: transparent;
+
+    padding-left: 1em;
+    font-size: 1.3em;
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.upcoming-events-filter-group {
+    padding: 1.4em 2.4em;
+
+    position: relative;
+    display: inline-block;
+}
+
+.upcoming-events-filter-group input{
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: -999;
+    left: -999;
+}
+
+.upcoming-events-filter-group label {
+    cursor: pointer;
+    margin: 0 0.3em;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    color: $dark-gray;
+
+    transition: color 300ms ease;
+}
+
+.upcoming-events-filter-group input:checked + label {
+    color: #F07077;
 }

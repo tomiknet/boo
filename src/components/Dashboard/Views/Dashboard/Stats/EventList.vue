@@ -16,17 +16,27 @@
 						<div>
 							<h4 class="card-title" style="margin-bottom:0px;">{{ item.title }}</h4>
 							<p class="category">{{ item.date }}</p>
+							<p>
+								<v-chip v-for="(item, index) in filteredList" :key="item.title" :data-index="index" outline color="primary">Outline</v-chip>
+							</p>
 						</div>
 						<div>
 							<p>{{ item.desc }}</p>
-							<div class="location">
-								<v-icon v-if="item.address">location_on</v-icon>
+							<div class="created">
+								<i v-if="item.day" class="fas fa-compress" title="Number of visits"></i>
+								{{ item.day }}
+							</div>
+							<div class="lasvisit">
+								<i v-if="item.address" class="far fa-calendar-check" title="Last visited"></i>
+								{{ item.address }}
+							</div>
+							<div class="created">
+								<i v-if="item.address" class="far fa-calendar-plus"  title="Created on"></i>
 								{{ item.address }}
 							</div>
 						</div>
 						<div class="date-ribbon">
-							<h2>{{ item.month }}</h2>
-							<h1>{{ item.day }}</h1>
+							<div class="hits">{{ item.day }}</div>
 						</div>
 					</v-layout>
 				</v-layout>
@@ -44,7 +54,7 @@
 				title: 'Scuba Merit Badge',
 				date: 'www.scuba.com/merit/badge.php',
 				desc: 'Earn your scuba diving merit badge. Pre-req: Requirement 1a, 2b, 4ab',
-				address: '503 Harbor Blvd, Destin, FL',
+				address: '12.01.2019',
 				pic: 'https://images.unsplash.com/photo-1484507175567-a114f764f78b?ixlib=rb-0.3.5&s=abc2cb4d7e6d8aca1e8914c1b5e909a6&auto=format&fit=crop&w=500&q=60',
 				month: 'Aug',
 				day: '28',
@@ -103,6 +113,9 @@
 	computed: {
 		filteredList() {
 			this.filterUpcoming
+
+			//console.log(this.$store.getters.bookmarkList);
+			//this.bookmarkList = this.$store.getters.bookmarkList;
             
             this.eventList.sort(function(a, b){
                 if(a.title < b.title) { return -1; }
