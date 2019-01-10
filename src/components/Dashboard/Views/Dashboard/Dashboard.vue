@@ -37,17 +37,32 @@
                                     <div class="underline"></div>
                                 </div>
 
-                                <v-btn flat style="align-self: flex-end; color: #9E9E9E; margin-right: 1.4em">
-                                    <span style="padding-right: 0.4em;">A-Z</span>
+                                <v-menu class="filter-menu">
+                                <v-btn slot="activator" flat style="align-self: flex-end; color: #9E9E9E; margin-right: 1.4em">
+                                    <span style="padding-right: 0.4em;">{{ filter.sort }}</span>
                                     <v-icon>filter_list</v-icon>
                                 </v-btn>
+                                   <v-list style="left:0px;top:0px;">
+                                    <v-list-tile @click="filter.sort = 'A-Z'">
+                                        <v-list-tile-title>A-Z</v-list-tile-title>
+                                    </v-list-tile>
+                                    <v-list-tile @click="filter.sort = 'Popular'">
+                                        <v-list-tile-title>Popular</v-list-tile-title>
+                                    </v-list-tile>
+                                    <v-list-tile @click="filter.sort = 'Newest'">
+                                        <v-list-tile-title>Newest</v-list-tile-title>
+                                    </v-list-tile>
+                                    </v-list>
+                                </v-menu>
+
                             </v-layout>
                             <!-- CUSTOM EVENT LIST COMPONENT -->
                             <event-list
                                     :filter-upcoming="filter.upcoming"
                                     :filter-important="filter.important"
                                     :filter-search="filter.search"
-                                    :filter-tag="filter.tag" />
+                                    :filter-tag="filter.tag" 
+                                    :filter-sort="filter.sort"/>
                             <!-- THE THING ABOVE IS THE CUSTOM EVENT LIST COMPONENT -->
                         </v-layout>
                     </v-layout>
@@ -78,7 +93,8 @@
                     upcoming: true,
                     important: true,
                     search: '',
-                    tag: 'api'
+                    tag: 'api',
+                    sort: 'A-Z'
                 },
 
             }

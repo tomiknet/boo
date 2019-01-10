@@ -36,7 +36,7 @@
 							</div>
 						</div>
 						<div class="date-ribbon">
-							<div class="hits">{{ item.visits }}</div>
+							<div class="hits">{{ item.position }}</div>
 						</div>
 					</v-layout>
 				</v-layout>
@@ -53,7 +53,7 @@
 		  popularList: [],
       }
     },
-    props: ['filterUpcoming', 'filterImportant', 'filterSearch', 'filterTag'],
+    props: ['filterUpcoming', 'filterImportant', 'filterSearch', 'filterTag', 'filterSort'],
 
     filters: {
         formatDate(value){
@@ -63,28 +63,45 @@
 
 	computed: {
 		filteredList() {
-
             //console.log('eventlist-filteredlist',this.$store.getters.bookmarkList);
 			this.eventList = this.$store.getters.bookmarkList;
-			this.popularList = this.eventList;
+            this.popularList = this.eventList;
+
+            this.popularList = this.popularList.sort(function(a, b){
+                    if(parseInt(a.visits) > parseInt(b.visits)) { return -1; }
+                    if(parseInt(a.visits) < parseInt(b.visits)) { return 1; }
+                    return 0;
+                });
+
+            //console.log(this.popularList);
+                let i = 1;
+                this.popularList.forEach( pb => {
+                    //console.log(pb.name);
+                    this.eventList.forEach( elb => {
+                        if(elb.name == pb.name) {
+                            elb.position = i;
+                        }
+                    });  
+
+                    i = i + 1;
+                });
+
             
-            this.eventList.sort(function(a, b){
-                if(a.name < b.name) { return -1; }
-                if(a.name > b.name) { return 1; }
-                return 0;
-            });
+            if(this.filterSort == 'A-Z') {
+                this.eventList = this.eventList.sort(function(a, b){
+                    if(a.name < b.name) { return -1; }
+                    if(a.name > b.name) { return 1; }
+                    return 0;
+                });
+            }
 
-			this.popularList.sort(function(a, b){
-				if(a.visits > b.visits) { return -1; }
-				if(a.visits < b.visits) { return 1; }
-				return 0;
-			});
-
-			this.popularList.forEach( bookmark => {
-
-		});
-
-			console.log('eventlist-popularList',this.popularList);
+            if(this.filterSort == 'Newest') {
+                this.eventList = this.eventList.sort(function(a, b){
+                    if(a.id > b.id) { return -1; }
+                    if(a.id < b.id) { return 1; }
+                    return 0;
+                });
+            }            
 
 			return this.eventList.filter(e => {
 				let conditions = [true, true, true, true];
@@ -92,8 +109,10 @@
 				
 				if(this.filterImportant)
 					conditions[1] = e.important == this.filterImportant;
-				if(this.filterSearch.trim() != '')
-					conditions[2] = e.name.toLowerCase().includes(this.filterSearch.trim().toLowerCase());
+				if(this.filterSearch.trim() != ''){
+                    let textCombined = e.name.toLowerCase() + ' ' + e.desc.toLowerCase();
+                    conditions[2] = textCombined.includes(this.filterSearch.trim().toLowerCase());
+                }
 
 				if(this.filterTag.trim() != '')
 					conditions[3] = e.tags.includes(this.filterTag.trim().toLowerCase());
