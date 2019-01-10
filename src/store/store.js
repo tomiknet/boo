@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from "moment";
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -24,6 +25,7 @@ export const store = new Vuex.Store({
                     FROM book_r_bookmarks AS a
                     LEFT JOIN book_bookmarks AS b ON a.bookmark_id=b.ID
                     WHERE a.user_id=1
+                    ORDER BY b.ID DESC
                     `
         }).then((response) => {
             commit('SET_BOOKMARKS', response.data)
@@ -41,6 +43,7 @@ export const store = new Vuex.Store({
                     LEFT JOIN book_r_tags AS b ON a.bookmark_id=b.bookmark_id
                     LEFT JOIN book_tags AS c ON b.tag_id=c.ID
                     WHERE a.user_id=1
+                    ORDER BY c.tag_name ASC
                     `
         }).then((response) => {
             commit('SET_TAGS', response.data)
@@ -48,7 +51,23 @@ export const store = new Vuex.Store({
         .catch((e) => {
             console.error(e)
         })
-        }        
+        },
+
+      addClick ({ commit, state }, props) {
+        //console.log('addclick',props);
+        axios.post('http://book.noviny.live/db/index.php', {
+          request: 'INSERT',
+          query: `INSERT INTO book_r_visits (user_id, bookmark_id, day, month, year)
+                  VALUES ('1', ${props.id}, ${moment().format('DD')}, ${moment().format('MM')}, ${moment().format('YYYY')})
+                    `
+        }).then((response) => {
+          commit('UPDATE_BOOKMARK_CLICKS', props)
+        })
+        .catch((e) => {
+            console.error(e)
+        })
+
+      }
   },
   mutations: {
     SET_BOOKMARKS (state, response) {
@@ -58,38 +77,48 @@ export const store = new Vuex.Store({
     SET_TAGS (state, response) {
       //console.log('tags-response',response);
       state.tags = response
-    }    
+    },
+    UPDATE_BOOKMARK_CLICKS (state, props) {
+      //console.log('tags-response',response);
+      state.bookmarks.forEach( bookmark => {
+        if (bookmark.ID == props.id) {
+            bookmark.bookmark_visits = parseInt(bookmark.bookmark_visits) + 1;
+          }
+      });
+    }
   },
   getters: {
         bookmarkList: (state) => {
-        //console.log('statebookmarks',state.bookmarks);
-        var bookmarkList = state.bookmarks.map( bookmark => {
-            return {
-                created: bookmark.bookmark_created,
-                deleted: bookmark.bookmark_deleted,
-                desc: bookmark.bookmark_description,
-                pic: bookmark.bookmark_image,
-                lastvisit: bookmark.bookmark_lastvisit,
-                name: bookmark.bookmark_name,
-                url: bookmark.bookmark_url,
-                visits: bookmark.bookmark_visits,
-                tags: bookmark.bookmark_tags.split(','),
-                important: true,
-                upcoming: true
-            };
-        });
-        //console.log('bookmarkList',bookmarkList);
-        return bookmarkList;
+          //console.log('statebookmarks',state.bookmarks);
+          var bookmarkList = state.bookmarks.map( bookmark => {
+              return {
+                  id: bookmark.ID,
+                  position: bookmark.ID,
+                  created: bookmark.bookmark_created,
+                  deleted: bookmark.bookmark_deleted,
+                  desc: bookmark.bookmark_description,
+                  pic: bookmark.bookmark_image,
+                  lastvisit: bookmark.bookmark_lastvisit,
+                  name: bookmark.bookmark_name,
+                  url: bookmark.bookmark_url,
+                  visits: bookmark.bookmark_visits,
+                  tags: bookmark.bookmark_tags.split(','),
+                  important: true,
+                  upcoming: true
+              };
+          });
+          console.log('bookmarkList',bookmarkList);
+          return bookmarkList;
         },
         tagList: (state) => {
-        //console.log('statetags',state.tags);
-        var tagList = state.tags.map( tag => {
-            return {
-                name: tag.tag_name
-            };
-        });
-        //console.log('tagList',tagList);
-        return tagList;
+          //console.log('statetags',state.tags);
+          var tagList = state.tags.map( tag => {
+              return {
+                  name: tag.tag_name
+              };
+          });
+          //console.log('tagList',tagList);
+          return tagList;
         }        
     },
 })

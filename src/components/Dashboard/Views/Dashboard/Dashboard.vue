@@ -20,18 +20,23 @@
                             </div>
                             <v-layout align-center justify-space-between row style="width: 100%;">
                                 <div class="upcoming-events-filter-group">
-                                    <div v-for="(tag, index) in tags"> 
-                                        <input type="radio" id="tagSelect" name="tag-select" :value="tag.name" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
-                                        <label for="tagSelect">{{ tag.name }}</label>
+
+                                    <div v-for="(tag, index) in tags">
+                                        <input type="radio" :id="tag.name" name="tag-select" :value="tag.name" v-model="filter.tag">
+                                        <label :for="tag.name">#{{ tag.name }}</label>
                                     </div>
+                                    <div><input type="radio" id="all" name="tag-select" value="" v-model="filter.tag"> <label for="all">.all</label></div>
+                                    <!--
                                     <input type="radio" id="importantSelect" name="important-select" value="important" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
                                     <label for="importantSelect">Important</label>
                                     <input type="radio" id="upcomingSelect" name="upcoming-select" value="upcoming" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
                                     <label for="upcomingSelect">Upcoming</label>
                                     <input type="radio" id="finishedSelect" name="finished-select" value="finished" v-model="eventsUpcomingFilter" @change="upcomingFilterChange()">
                                     <label for="finishedSelect">Finished</label>
+                                    -->
                                     <div class="underline"></div>
                                 </div>
+
                                 <v-btn flat style="align-self: flex-end; color: #9E9E9E; margin-right: 1.4em">
                                     <span style="padding-right: 0.4em;">A-Z</span>
                                     <v-icon>filter_list</v-icon>
@@ -41,7 +46,8 @@
                             <event-list
                                     :filter-upcoming="filter.upcoming"
                                     :filter-important="filter.important"
-                                    :filter-search="filter.search" />
+                                    :filter-search="filter.search"
+                                    :filter-tag="filter.tag" />
                             <!-- THE THING ABOVE IS THE CUSTOM EVENT LIST COMPONENT -->
                         </v-layout>
                     </v-layout>
@@ -71,7 +77,8 @@
                 filter: {
                     upcoming: true,
                     important: true,
-                    search: ''
+                    search: '',
+                    tag: 'api'
                 },
 
             }

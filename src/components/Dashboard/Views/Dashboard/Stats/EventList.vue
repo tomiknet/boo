@@ -11,11 +11,11 @@
 		<li v-for="(item, index) in filteredList" :key="item.name" :data-index="index">
 			<v-card class="event-card">
 				<v-layout row>
-					<img :src="item.pic">
+					<img :src="item.pic" @click="addClick(item)">
 					<v-layout column justify-space-between class="event-card-text">
 						<div>
-							<h4 class="card-title" style="margin-bottom:0px;">{{ item.name }}</h4>
-							<p class="category">{{ item.url }}</p>
+							<h4 class="card-title" style="margin-bottom:0px;" @click="addClick(item)">{{ item.name }}</h4>
+							<p class="category" @click="addClick(item)">{{ item.url }}</p>
 							<p>
 								<v-chip v-for="(tag, index) in item.tags" :key="tag" :data-index="index" outline color="primary"> {{ tag }} </v-chip>
 							</p>
@@ -49,10 +49,11 @@
   export default {
     data () {
       return {
-        eventList: []
+        eventList: [],
+		  popularList: [],
       }
     },
-    props: ['filterUpcoming', 'filterImportant', 'filterSearch'],
+    props: ['filterUpcoming', 'filterImportant', 'filterSearch', 'filterTag'],
 
     filters: {
         formatDate(value){
@@ -65,21 +66,37 @@
 
             //console.log('eventlist-filteredlist',this.$store.getters.bookmarkList);
 			this.eventList = this.$store.getters.bookmarkList;
+			this.popularList = this.eventList;
             
             this.eventList.sort(function(a, b){
                 if(a.name < b.name) { return -1; }
                 if(a.name > b.name) { return 1; }
                 return 0;
-            })
+            });
+
+			this.popularList.sort(function(a, b){
+				if(a.visits > b.visits) { return -1; }
+				if(a.visits < b.visits) { return 1; }
+				return 0;
+			});
+
+			this.popularList.forEach( bookmark => {
+
+		});
+
+			console.log('eventlist-popularList',this.popularList);
 
 			return this.eventList.filter(e => {
-				let conditions = [true, true, true];
+				let conditions = [true, true, true, true];
 				conditions[0] = e.upcoming == this.filterUpcoming;
 				
 				if(this.filterImportant)
 					conditions[1] = e.important == this.filterImportant;
 				if(this.filterSearch.trim() != '')
 					conditions[2] = e.name.toLowerCase().includes(this.filterSearch.trim().toLowerCase());
+
+				if(this.filterTag.trim() != '')
+					conditions[3] = e.tags.includes(this.filterTag.trim().toLowerCase());
 				
 				return conditions.every(e => e === true);
 			});
@@ -111,6 +128,11 @@
 					{ complete: done }
 				);
 			}, delay);
+		},
+		addClick(item) {
+			window.open(item.url,'_blank');
+			//console.log('addclick',id);
+			this.$store.dispatch('addClick', {id: item.id});
 		}
 	}
 

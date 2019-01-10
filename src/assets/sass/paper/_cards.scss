@@ -786,6 +786,10 @@
     display: inline-block;
 }
 
+.upcoming-events-filter-group div{
+    float:left;
+}
+
 .upcoming-events-filter-group input{
     visibility: hidden;
     opacity: 0;
