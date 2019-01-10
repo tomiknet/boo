@@ -4,6 +4,20 @@ export default [
     icon: 'ti-calendar',
     path: '/dashboard'
   },
+    {
+    name: 'Bookmarks',
+    icon: 'ti-view-list-alt',
+    collapsed: false,
+    children: [{
+      name: 'List of bookmarks',
+      path: '/bookmarks/list'
+    },
+    {
+      name: 'Add a bookmark',
+      path: '/bookmarks/item'
+    }
+    ]
+  },
     /*
   {
     name: 'Dashboard',
