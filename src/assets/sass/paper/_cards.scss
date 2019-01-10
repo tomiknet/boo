@@ -755,6 +755,17 @@
     max-width: 1000px;
 }
 
+.filter-menu {
+    display: inline-block;
+}
+
+.filter-menu .v-menu__content {
+    top: 80px!important;
+    left: 835px!important;
+    //top: 0px!important;
+    //left: 0px!important;
+}
+
 .search-bar {
     background: #fff;
     padding: 1em;
