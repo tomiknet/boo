@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
                     FROM book_r_bookmarks AS a
                     LEFT JOIN book_bookmarks AS b ON a.bookmark_id=b.ID
                     WHERE a.user_id=1
-                    ORDER BY b.ID DESC
+                    ORDER BY b.bookmark_name ASC
                     `
         }).then((response) => {
             commit('SET_BOOKMARKS', response.data)
@@ -93,7 +93,7 @@ export const store = new Vuex.Store({
           var bookmarkList = state.bookmarks.map( bookmark => {
               return {
                   id: bookmark.ID,
-                  position: bookmark.ID,
+                  position: 0,
                   created: bookmark.bookmark_created,
                   deleted: bookmark.bookmark_deleted,
                   desc: bookmark.bookmark_description,
@@ -107,7 +107,7 @@ export const store = new Vuex.Store({
                   upcoming: true
               };
           });
-          console.log('bookmarkList',bookmarkList);
+          //console.log('bookmarkList',bookmarkList);
           return bookmarkList;
         },
         tagList: (state) => {

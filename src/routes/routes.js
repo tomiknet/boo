@@ -32,6 +32,12 @@ import Wizard from 'src/components/Dashboard/Views/Forms/Wizard.vue'
 import RegularTables from 'src/components/Dashboard/Views/Tables/RegularTables.vue'
 import ExtendedTables from 'src/components/Dashboard/Views/Tables/ExtendedTables.vue'
 import PaginatedTables from 'src/components/Dashboard/Views/Tables/PaginatedTables.vue'
+
+// Bookmarks page
+
+import BookmarkList from 'src/components/Dashboard/Views/Bookmarks/BookmarkList.vue'
+import BookmarkItem from 'src/components/Dashboard/Views/Bookmarks/BookmarkItem.vue'
+
 // Maps pages
 import GoogleMaps from 'src/components/Dashboard/Views/Maps/GoogleMaps.vue'
 import FullScreenMap from 'src/components/Dashboard/Views/Maps/FullScreenMap.vue'
@@ -135,6 +141,23 @@ let tablesMenu = {
     }]
 }
 
+let bookmarksMenu = {
+  path: '/bookmarks',
+  component: DashboardLayout,
+  redirect: '/bookmarks/list',
+  children: [
+    {
+      path: 'list',
+      name: 'List of bookmarks',
+      component: BookmarkList
+    },
+    {
+      path: 'item',
+      name: 'Manage a bookmark',
+      component: BookmarkItem
+    }]
+}
+
 let mapsMenu = {
   path: '/maps',
   component: DashboardLayout,
@@ -220,6 +243,7 @@ const routes = [
   componentsMenu,
   formsMenu,
   tablesMenu,
+  bookmarksMenu,
   mapsMenu,
   pagesMenu,
   loginPage,
