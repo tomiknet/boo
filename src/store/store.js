@@ -83,6 +83,7 @@ export const store = new Vuex.Store({
       state.bookmarks.forEach( bookmark => {
         if (bookmark.ID == props.id) {
             bookmark.bookmark_visits = parseInt(bookmark.bookmark_visits) + 1;
+            bookmark.bookmark_lastvisit = moment().format('DD.MM.YYYY');
           }
       });
     }
