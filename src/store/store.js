@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import moment from "moment";
+import swal from 'sweetalert2'
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -67,7 +68,39 @@ export const store = new Vuex.Store({
             console.error(e)
         })
 
-      }
+      },
+
+      addBookmark ({ commit, state }, props) {
+          console.log('store/addBookmark',props);
+            if (props.bookmarkPublic == false) {
+                props.bookmarkPublic = 0;
+            } else {
+                props.bookmarkPublic = 1;
+            }
+
+            axios.post('http://book.noviny.live/db/index.php', {
+            request: 'INSERT',
+            query: `INSERT INTO book_bookmarks (bookmark_name, bookmark_url, bookmark_image, bookmark_description, bookmark_created)
+                    VALUES ('${props.bookmarkTitle}', '${props.bookmarkUrl}', '${props.bookmarkImage}', '${props.bookmarkDesc}', '${moment().format('YYYY-MM-DD HH:mm:ss')}')
+                        `
+            }).then((response) => {
+                axios.post('http://book.noviny.live/db/index.php', {
+                request: 'INSERT',
+                query: `INSERT INTO book_r_bookmarks (user_id, bookmark_id, public)
+                        VALUES ('1', '${response.data.ID}', '${props.bookmarkPublic}')
+                            `
+                }).then((response) => {
+                commit('CONFIRM_ADDED_BOOKMARK', props)
+                })
+                .catch((e) => {
+                    console.error(e)
+                })
+            })
+            .catch((e) => {
+                console.error(e)
+            })
+
+      },      
   },
   mutations: {
     SET_BOOKMARKS (state, response) {
@@ -86,7 +119,17 @@ export const store = new Vuex.Store({
             bookmark.bookmark_lastvisit = moment().format('DD.MM.YYYY');
           }
       });
-    }
+    },
+    CONFIRM_ADDED_BOOKMARK (state, props) {
+        swal({
+            title: `Good job!`,
+            text: 'Bookmark ' + props.bookmarkTitle + ' was successfully added to the database.',
+            buttonsStyling: false,
+            confirmButtonClass: 'btn btn-success btn-fill',
+            type: 'success'
+          })
+      //state.tags = response
+    },    
   },
   getters: {
         bookmarkList: (state) => {
