@@ -94,6 +94,15 @@
                 </h4>
             </div>
             <div class="card-content"> 
+                <div class="image-placer">
+                </div>
+                <br />
+                <button @click.prevent="imagize" type="button" class="btn btn-wd btn-info btn-fill btn-magnify">
+	              <span class="btn-label">
+	              <i class="fas fa-sync-alt"></i>
+	              </span>
+                Create new image
+              </button>
             </div>     
         </div> <!-- end card -->
         </div> <!--  end col-md-12  -->                  
@@ -163,6 +172,26 @@ import {Tag} from 'element-ui'
           }
         })
       },
+
+      imagize() {
+
+          if(this.model.bookmarkUrl.length > 0){
+          this.$store.dispatch('createImage', {
+                bookmarkUrl: this.model.bookmarkUrl
+              });
+          } else {
+            this.$notify({
+                component: {
+                template: `<span>Enter Bookmark URL first.</span>`
+                },
+                icon: 'ti-alert',
+                horizontalAlign: 'center',
+                verticalAlign: 'top',
+                type: 'danger'
+            })
+          }
+
+      },      
 
       handleClose (tag) {
         this.model.tags.dynamicTags.splice(this.model.tags.dynamicTags.indexOf(tag), 1)

@@ -93,7 +93,7 @@
                     upcoming: true,
                     important: true,
                     search: '',
-                    tag: 'api',
+                    tag: '',
                     sort: 'A-Z'
                 },
 
