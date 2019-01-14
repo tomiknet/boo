@@ -63,15 +63,15 @@ export const store = new Vuex.Store({
                     `
         }).then((response) => {
           commit('UPDATE_BOOKMARK_CLICKS', props)
-        })
-        .catch((e) => {
-            console.error(e)
-        })
+        }).catch((e) => { console.error(e) })
 
       },
 
       addBookmark ({ commit, state }, props) {
           console.log('store/addBookmark',props);
+
+          return false;
+
             if (props.bookmarkPublic == false) {
                 props.bookmarkPublic = 0;
             } else {
@@ -89,7 +89,44 @@ export const store = new Vuex.Store({
                 query: `INSERT INTO book_r_bookmarks (user_id, bookmark_id, public)
                         VALUES ('1', '${response.data.ID}', '${props.bookmarkPublic}')
                             `
-                }).then((response) => {
+                }).then((responseR) => {
+
+                    let requestedTags='';
+                      props.bookmarkTags.dynamicTags.forEach(function(tag) {
+                          axios.post('http://book.noviny.live/db/index.php', {
+                              request: 'SELECT',
+                              query: `SELECT ID from book_tags WHERE tag_name = '${tag}'
+                                        `
+                          }).then((responseT) => {
+                              if(response.data.ID){
+                              requestedTags = requestedTags + '(' + response.data.ID + ',' +responseT.data.ID+ '),';
+                          }else{
+                              axios.post('http://book.noviny.live/db/index.php', {
+                                  request: 'INSERT',
+                                  query: `INSERT INTO tag_name (tag_name)
+                                              VALUES (${tag})
+                                                `
+                              }).then((responseTT) => {
+                                  requestedTags = requestedTags + '(' + response.data.ID + ',' +responseTT.data.ID+ '),';
+                              }).catch((e) => { console.error(e) })
+                          }
+                          }).catch((e) => { console.error(e) })
+                      });
+
+                    requestedTags = requestedTags.replace(/.$/,";");
+
+                    axios.post('http://book.noviny.live/db/index.php', {
+                              request: 'INSERT',
+                              query: `INSERT INTO book_r_tags (bookmark_id, tag_id)
+                                              VALUES ${requestedTags}
+                                                    `
+                    }).then((response) => {
+
+                    }).catch((e) => { console.error(e) })
+
+
+
+
                 commit('CONFIRM_ADDED_BOOKMARK', props)
                 })
                 .catch((e) => {
