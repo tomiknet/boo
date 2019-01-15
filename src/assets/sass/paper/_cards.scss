@@ -750,6 +750,16 @@
 }
 /* Below is page css. Not event card */
 
+.card-content .image-placer {
+    background-color: #F3F2EE;
+    border: 1px solid #e8e7e3;
+    border-radius: 4px;
+    width: 280px;
+    height: 200px;
+    object-fit: cover;    
+    margin: 0 auto;
+}
+
 .wrapme {
     width: 80%;
     max-width: 1000px;
