@@ -80,8 +80,7 @@
                 </div> 
                 <p-checkbox v-model="model.bookmarkPublic">Visible for everyone</p-checkbox>    
 
-
-                <button type="submit" @click.prevent="validate" class="btn btn-fill btn-info">Submit</button>
+                <v-btn @click.prevent="validate" color="#7a9e9f" class="white--text" round depressed>Submit</v-btn>
             </div>
             </form>
         </div> <!-- end card -->
@@ -95,15 +94,16 @@
             </div>
             <div class="card-content"> 
                 <div class="image-placer">
-                    <img :src="model.bookmarkImage">
+                    <img v-show="model.bookmarkImage" :src="model.bookmarkImage">
                 </div>
                 <br />
-                <button @click.prevent="imagize" type="button" class="btn btn-wd btn-info btn-fill btn-magnify">
-	              <span class="btn-label">
-	              <i class="fas fa-sync-alt"></i>
-	              </span>
-                Create new image
-              </button>
+                <v-btn @click.prevent="imagize" color="#7a9e9f" class="white--text" round depressed :loading="loading4" :disabled="loading4">
+                <v-icon style="font-size: 14px;">fas fa-sync-alt</v-icon>&nbsp; Create new image
+                <span slot="loader" class="custom-loader" >
+                <v-icon style="font-size: 14px;">fas fa-sync-alt</v-icon>
+                </span>
+                </v-btn>
+
             </div>     
         </div> <!-- end card -->
         </div> <!--  end col-md-12  -->                  
@@ -121,6 +121,8 @@ import {Tag} from 'element-ui'
 
     data () {
       return {
+        loader: null,
+        loading4: false,
         model: {
           bookmarkTitle: '',
           bookmarkUrl: '',
@@ -153,10 +155,6 @@ import {Tag} from 'element-ui'
     },
     computed: {
         ...mapFields(['bookmarkTitle','bookmarkUrl','bookmarkImage']),
-        ...mapGetters({
-            model.bookmarkImage: 'newImage'
-        })
-
     },
     methods: {
       getError (fieldName) {
@@ -179,10 +177,17 @@ import {Tag} from 'element-ui'
       },
 
       imagize() {
-
+          this.loader = 'loading4';
+          this.loading4 = true;
           if(this.model.bookmarkUrl.length > 0){
-          this.$store.dispatch('createImage', {
+              this.$store.dispatch('createImage', {
                 bookmarkUrl: this.model.bookmarkUrl
+              }).then(response => {
+                this.model.bookmarkImage = response;
+                this.loader = null;
+                this.loading4 = false;
+              }, error => {
+                console.error(error)
               });
           } else {
             this.$notify({
@@ -194,6 +199,8 @@ import {Tag} from 'element-ui'
                 verticalAlign: 'top',
                 type: 'danger'
             })
+            this.loader = null;
+            this.loading4 = false;
           }
 
       },      
@@ -217,8 +224,45 @@ import {Tag} from 'element-ui'
         this.model.tags.inputVisible = false
         this.model.tags.inputValue = ''
       },      
-    }    
+    },
+   
   }
 </script>
 <style>
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>

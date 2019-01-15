@@ -14,7 +14,6 @@ export const store = new Vuex.Store({
   state: {
       bookmarks: [],
       tags: [],
-      newImage: ''
   },
   actions: {
         loadBookmarks ({ commit }) {
@@ -72,9 +71,11 @@ export const store = new Vuex.Store({
 
       createImage ({ commit, state }, props) {
         //console.log('addclick',props);
-        axios.get('http://service.noviny.live/convertio/post.php?l='+props.bookmarkUrl).then((response) => {
-          commit('CONFIRM_CREATING_IMAGE', response.data)
-        }).catch((e) => { console.error(e) })
+         return new Promise((resolve, reject) => {
+            axios.get('http://service.noviny.live/convertio/post.php?l='+props.bookmarkUrl).then((response) => {
+            resolve(response.data)
+            }).catch((e) => { reject(e) })
+        })              
 
       },
       
@@ -172,10 +173,6 @@ export const store = new Vuex.Store({
           }
       });
     },
-    CONFIRM_CREATING_IMAGE (state, response) {
-       console.log('CONFIRM_CREATING_IMAGE',response);
-       state.newImage = response
-    },    
     CONFIRM_ADDED_BOOKMARK (state, props) {
         swal({
             title: `Good job!`,
@@ -219,6 +216,6 @@ export const store = new Vuex.Store({
           });
           //console.log('tagList',tagList);
           return tagList;
-        }        
+        },
     },
 })
