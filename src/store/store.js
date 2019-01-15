@@ -12,8 +12,9 @@ Vue.use(VueAxios, axios)
 
 export const store = new Vuex.Store({
   state: {
-    bookmarks: [],
-    tags: []
+      bookmarks: [],
+      tags: [],
+      newImage: ''
   },
   actions: {
         loadBookmarks ({ commit }) {
@@ -72,7 +73,7 @@ export const store = new Vuex.Store({
       createImage ({ commit, state }, props) {
         //console.log('addclick',props);
         axios.get('http://service.noviny.live/convertio/post.php?l='+props.bookmarkUrl).then((response) => {
-          commit('CONFIRM_CREATING_IMAGE', response)
+          commit('CONFIRM_CREATING_IMAGE', response.data)
         }).catch((e) => { console.error(e) })
 
       },
@@ -172,7 +173,8 @@ export const store = new Vuex.Store({
       });
     },
     CONFIRM_CREATING_IMAGE (state, response) {
-      console.log('CONFIRM_CREATING_IMAGE',response);
+       console.log('CONFIRM_CREATING_IMAGE',response);
+       state.newImage = response
     },    
     CONFIRM_ADDED_BOOKMARK (state, props) {
         swal({

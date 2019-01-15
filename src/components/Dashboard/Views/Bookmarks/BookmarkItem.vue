@@ -95,6 +95,7 @@
             </div>
             <div class="card-content"> 
                 <div class="image-placer">
+                    <img :src="model.bookmarkImage">
                 </div>
                 <br />
                 <button @click.prevent="imagize" type="button" class="btn btn-wd btn-info btn-fill btn-magnify">
@@ -151,7 +152,11 @@ import {Tag} from 'element-ui'
       }
     },
     computed: {
-      ...mapFields(['bookmarkTitle','bookmarkUrl','bookmarkImage'])
+        ...mapFields(['bookmarkTitle','bookmarkUrl','bookmarkImage']),
+        ...mapGetters({
+            model.bookmarkImage: 'newImage'
+        })
+
     },
     methods: {
       getError (fieldName) {
