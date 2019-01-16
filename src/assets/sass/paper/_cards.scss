@@ -760,6 +760,13 @@
     margin: 0 auto;
 }
 
+.card-content .image-placer img{
+    border-radius: 4px;
+    width: 280px;
+    height: 198px;
+    object-fit: cover;    
+}
+
 .wrapme {
     width: 80%;
     max-width: 1000px;
