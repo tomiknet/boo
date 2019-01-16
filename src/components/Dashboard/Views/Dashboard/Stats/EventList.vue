@@ -14,11 +14,33 @@
 					<img :src="item.pic" @click="addClick(item)">
 					<v-layout column justify-space-between class="event-card-text">
 						<div>
-							<h4 class="card-title" style="margin-bottom:0px;" @click="addClick(item)">{{ item.name }}</h4>
-							<p class="category" @click="addClick(item)">{{ item.url }}</p>
+                            <div class="event-card-title">
+							<h4 class="card-title" style="margin:0;" @click="addClick(item)">{{ item.name }}</h4>
+                            <p class="category" @click="addClick(item)">{{ item.url }}</p>
 							<p>
 								<v-chip v-for="(tag, index) in item.tags" :key="tag" :data-index="index" outline color="primary"> {{ tag }} </v-chip>
 							</p>
+                            </div>
+                            <div class="event-card-menu">
+                                <v-menu>
+                                    <v-btn
+                                    slot="activator"
+                                    icon
+                                    >
+                                    <v-icon>more_vert</v-icon>
+                                    </v-btn>
+
+                                    <v-list>
+                                    <v-list-tile @click="addClick(item)">
+                                        <v-list-tile-title>Edit</v-list-tile-title>
+                                    </v-list-tile>
+                                    <v-list-tile @click="addClick(item)">
+                                        <v-list-tile-title >Remind me</v-list-tile-title>
+                                    </v-list-tile>                                    
+                                    </v-list>
+                                </v-menu>
+                            </div>
+                            <div style="clear:both;"></div>
 						</div>
 						<div>
 							<p>{{ item.desc }}</p>

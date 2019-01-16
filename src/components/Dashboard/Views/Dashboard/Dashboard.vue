@@ -76,6 +76,111 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-sm-12">
+            <div class="card">
+                <v-card
+                class="mx-auto"
+                max-width="370"
+                style="border-radius: 6px;"
+                >
+                <v-card
+                    light
+                    flat
+                >
+                    <v-btn
+                    class="white--text"
+                    absolute
+                    bottom
+                    color="pink"
+                    right
+                    fab
+                    >
+                    <v-icon>fas fa-calendar-alt</v-icon>
+                    </v-btn>
+                    <v-img
+                    src="https://cdn.vuetifyjs.com/images/cards/forest.jpg"
+                    gradient="to top, rgba(255,255,255,.80), rgba(102,97,91,.01)"
+                    style="border-top-left-radius: 6px; border-top-right-radius: 6px;"
+                    >
+                    <v-container fill-height>
+                        <v-layout align-center>
+                        <strong class="display-4 font-weight-regular mr-4">8</strong>
+                        <v-layout column justify-end>
+                            <div class="headline font-weight-light">Monday</div>
+                            <div class="text-uppercase font-weight-light">February 2015</div>
+                        </v-layout>
+                        </v-layout>
+                    </v-container>
+                    </v-img>
+                </v-card>
+                <v-card-text class="py-0">
+                    <v-timeline
+                    align-top
+                    dense
+                    >
+                    <v-timeline-item
+                        color="pink"
+                        small
+                    >
+                        <v-layout pt-3>
+                        <v-flex xs3>
+                            <strong>5pm</strong>
+                        </v-flex>
+                        <v-flex>
+                            <strong>New Icon</strong>
+                            <div class="caption">Mobile App</div>
+                        </v-flex>
+                        </v-layout>
+                    </v-timeline-item>
+            
+                    <v-timeline-item
+                        color="pink"
+                        small
+                    >
+                        <v-layout wrap pt-3>
+                        <v-flex xs3>
+                            <strong>3-4pm</strong>
+                        </v-flex>
+                        <v-flex>
+                            <strong>Design Stand Up</strong>
+                            <div class="caption mb-2">Hangouts</div>
+                        </v-flex>
+                        </v-layout>
+                    </v-timeline-item>
+            
+                    <v-timeline-item
+                        color="teal lighten-3"
+                        small
+                    >
+                        <v-layout pt-3>
+                        <v-flex xs3>
+                            <strong>12pm</strong>
+                        </v-flex>
+                        <v-flex>
+                            <strong>Lunch break</strong>
+                        </v-flex>
+                        </v-layout>
+                    </v-timeline-item>
+            
+                    <v-timeline-item
+                        color="teal lighten-3"
+                        small
+                    >
+                        <v-layout pt-3>
+                        <v-flex xs3>
+                            <strong>9-11am</strong>
+                        </v-flex>
+                        <v-flex>
+                            <strong>Finish Home Screen</strong>
+                            <div class="caption">Web App</div>
+                        </v-flex>
+                        </v-layout>
+                    </v-timeline-item>
+                    </v-timeline>
+                </v-card-text>
+                </v-card>    
+            </div>    
+        </div>
     </div>
 </template>
 <script>
