@@ -777,10 +777,11 @@
 }
 
 .filter-menu .v-menu__content {
-    top: 80px!important;
-    left: 835px!important;
-    //top: 0px!important;
-    //left: 0px!important;
+    top: 0px!important;
+    left: 0px!important;
+    right: 0px!important;
+    margin-left: 80%;
+    margin-top: 10%;
 }
 
 .search-bar {
@@ -805,6 +806,27 @@
 
 .search-bar input:focus {
     outline: none;
+}
+
+.event-card-title{
+    float:left;
+    width:90%;
+}
+
+.event-card-menu{
+    float:left;
+    width:10%;
+}
+
+.event-card-menu .v-menu__content {
+    top: 0px!important;
+    left: 0px!important;
+    right: 0px!important;
+    margin-left: 80%;
+}
+
+.event-card-menu .v-list__tile {
+    height: 20px!important;
 }
 
 .upcoming-events-filter-group {
