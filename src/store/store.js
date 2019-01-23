@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import moment from "moment";
+import moment from "moment"
 import swal from 'sweetalert2'
 
 Vue.use(Vuex)
