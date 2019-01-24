@@ -22,7 +22,7 @@
 							</p>
                             </div>
                             <div class="event-card-menu">
-                                <v-menu>
+                                <v-menu transition="slide-y-transition">
                                     <v-btn
                                     slot="activator"
                                     icon

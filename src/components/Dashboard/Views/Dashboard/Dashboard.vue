@@ -104,10 +104,10 @@
                     >
                     <v-container fill-height>
                         <v-layout align-center>
-                        <strong class="display-4 font-weight-regular mr-4">8</strong>
+                        <strong class="display-4 font-weight-regular mr-4">17</strong>
                         <v-layout column justify-end>
-                            <div class="headline font-weight-light">Monday</div>
-                            <div class="text-uppercase font-weight-light">February 2015</div>
+                            <div class="headline font-weight-light">Thursday</div>
+                            <div class="text-uppercase font-weight-light">January 2019</div>
                         </v-layout>
                         </v-layout>
                     </v-container>
@@ -124,11 +124,12 @@
                     >
                         <v-layout pt-3>
                         <v-flex xs3>
-                            <strong>5pm</strong>
+                            <strong>17:00</strong>
                         </v-flex>
                         <v-flex>
-                            <strong>New Icon</strong>
-                            <div class="caption">Mobile App</div>
+                            <strong>Daily reminder</strong>
+                            <div class="caption">https://www.google.sk/</div>
+                            <div class="caption">https://www.ornhub.com/</div>
                         </v-flex>
                         </v-layout>
                     </v-timeline-item>
@@ -139,11 +140,11 @@
                     >
                         <v-layout wrap pt-3>
                         <v-flex xs3>
-                            <strong>3-4pm</strong>
+                            <strong>22:00</strong>
                         </v-flex>
                         <v-flex>
                             <strong>Design Stand Up</strong>
-                            <div class="caption mb-2">Hangouts</div>
+                            <div class="caption mb-2"> </div>
                         </v-flex>
                         </v-layout>
                     </v-timeline-item>
@@ -154,10 +155,11 @@
                     >
                         <v-layout pt-3>
                         <v-flex xs3>
-                            <strong>12pm</strong>
+                            <strong>11:00</strong>
                         </v-flex>
                         <v-flex>
                             <strong>Lunch break</strong>
+                            <div class="caption mb-2">with Martin Schmol</div>
                         </v-flex>
                         </v-layout>
                     </v-timeline-item>
@@ -168,11 +170,12 @@
                     >
                         <v-layout pt-3>
                         <v-flex xs3>
-                            <strong>9-11am</strong>
+                            <strong>17:00</strong>
                         </v-flex>
                         <v-flex>
-                            <strong>Finish Home Screen</strong>
-                            <div class="caption">Web App</div>
+                            <strong>Daily reminder</strong>
+                            <div class="caption">https://www.google.sk/</div>
+                            <div class="caption">https://www.ornhub.com/</div>
                         </v-flex>
                         </v-layout>
                     </v-timeline-item>
