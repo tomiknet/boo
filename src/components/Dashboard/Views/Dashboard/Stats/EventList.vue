@@ -34,7 +34,7 @@
                                     <v-list-tile @click="addClick(item)">
                                         <v-list-tile-title>Edit</v-list-tile-title>
                                     </v-list-tile>
-                                    <v-list-tile @click="addClick(item)">
+                                    <v-list-tile @click="addReminder(item)">
                                         <v-list-tile-title >Remind me</v-list-tile-title>
                                     </v-list-tile>                                    
                                     </v-list>
@@ -174,7 +174,11 @@
 			window.open(item.url,'_blank');
 			//console.log('addclick',id);
 			this.$store.dispatch('addClick', {id: item.id});
-		}
+        },
+        addReminder(item) {
+        this.$emit('on-remind', item)
+        }
+        
 	}
 
   }

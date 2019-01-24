@@ -62,7 +62,8 @@
                                     :filter-important="filter.important"
                                     :filter-search="filter.search"
                                     :filter-tag="filter.tag" 
-                                    :filter-sort="filter.sort"/>
+                                    :filter-sort="filter.sort"
+                                    @on-remind="addReminder" />
                             <!-- THE THING ABOVE IS THE CUSTOM EVENT LIST COMPONENT -->
                         </v-layout>
                     </v-layout>
@@ -76,6 +77,17 @@
                 </div>
             </div>
         </div>
+        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-card>
+            <v-card-title class="headline">Use Google's location service?</v-card-title>
+            <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+            <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click="dialog = false">Disagree</v-btn>
+            <v-btn color="green darken-1" flat @click="dialog = false">Agree</v-btn>
+            </v-card-actions>
+        </v-card>
+        </v-dialog>        
         <div class="col-lg-3 col-sm-12">
             <div class="card">
                 <v-card
@@ -194,6 +206,7 @@
         },
         data () {
             return {
+                dialog: false,
                 searchIsFocused: false,
                 eventsUpcomingFilter: 'important',
 
@@ -238,6 +251,9 @@
                         this.filter.important = false;
                         break;
                 }
+            },
+            addReminder(item) {
+                this.dialog = true;
             }
         }
     }
