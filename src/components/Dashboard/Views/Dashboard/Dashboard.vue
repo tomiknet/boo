@@ -77,138 +77,99 @@
                 </div>
             </div>
         </div>
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" persistent max-width="390">
         <v-card>
-            <v-card-title class="headline">Use Google's location service?</v-card-title>
-            <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+            <v-card-title class="headline">Set reminder...</v-card-title>
+            <v-card-text>
+                <p style="margin-left:30px;margin-bottom:0px;">Once: 
+                    <el-date-picker v-model="remind.datePicker" type="date" placeholder="Pick a day" value-format="dd.MM.yyyy" format="dd.MM.yyyy"
+                                :picker-options="remind.pickerOptions1">
+                    </el-date-picker>
+                </p> 
+                <p-radio v-model="remind.repeat" label="1" value="1">Daily</p-radio> 
+                <p-radio v-model="remind.repeat" label="2" value="2">Weekly</p-radio> 
+                <p-radio v-model="remind.repeat" label="3" value="3">Monthly</p-radio> 
+                <p-radio v-model="remind.repeat" label="4" value="4">Yearly</p-radio> 
+                <p style="margin-left:52px;margin-bottom:15px;">at: 
+                <el-time-select
+                v-model="remind.timePicker"
+                :picker-options="{
+                  start: '00:00',
+                  step: '01:00',
+                  end: '23:59'
+                }"
+                placeholder="Select time">
+              </el-time-select>
+              </p>
+            You will be notified about {{ remind.itemName }} everytime reminder reaches certain date and time.  
+            </v-card-text>
             <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click="dialog = false">Disagree</v-btn>
-            <v-btn color="green darken-1" flat @click="dialog = false">Agree</v-btn>
+            <v-btn color="#66615b" class="white--text" round depressed @click="dialog = false">Cancel</v-btn>
+            <v-btn @click.prevent="saveReminder" color="#7ac29a" class="white--text" round depressed :loading="loading4" :disabled="loading4">Schedule</v-btn>
             </v-card-actions>
         </v-card>
-        </v-dialog>        
-        <div class="col-lg-3 col-sm-12">
+        </v-dialog>    
+
+        <div class="col-lg-3 col-md-12">
             <div class="card">
-                <v-card
-                class="mx-auto"
-                max-width="370"
-                style="border-radius: 6px;"
-                >
-                <v-card
-                    light
-                    flat
-                >
-                    <v-btn
-                    class="white--text"
-                    absolute
-                    bottom
-                    color="pink"
-                    right
-                    fab
-                    >
-                    <v-icon>fas fa-calendar-alt</v-icon>
-                    </v-btn>
-                    <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/forest.jpg"
-                    gradient="to top, rgba(255,255,255,.80), rgba(102,97,91,.01)"
-                    style="border-top-left-radius: 6px; border-top-right-radius: 6px;"
-                    >
-                    <v-container fill-height>
-                        <v-layout align-center>
-                        <strong class="display-4 font-weight-regular mr-4">17</strong>
-                        <v-layout column justify-end>
-                            <div class="headline font-weight-light">Thursday</div>
-                            <div class="text-uppercase font-weight-light">January 2019</div>
-                        </v-layout>
-                        </v-layout>
-                    </v-container>
-                    </v-img>
-                </v-card>
-                <v-card-text class="py-0">
-                    <v-timeline
-                    align-top
-                    dense
-                    >
-                    <v-timeline-item
-                        color="pink"
-                        small
-                    >
-                        <v-layout pt-3>
-                        <v-flex xs3>
-                            <strong>17:00</strong>
-                        </v-flex>
-                        <v-flex>
-                            <strong>Daily reminder</strong>
-                            <div class="caption">https://www.google.sk/</div>
-                            <div class="caption">https://www.ornhub.com/</div>
-                        </v-flex>
-                        </v-layout>
-                    </v-timeline-item>
-            
-                    <v-timeline-item
-                        color="pink"
-                        small
-                    >
-                        <v-layout wrap pt-3>
-                        <v-flex xs3>
-                            <strong>22:00</strong>
-                        </v-flex>
-                        <v-flex>
-                            <strong>Design Stand Up</strong>
-                            <div class="caption mb-2"> </div>
-                        </v-flex>
-                        </v-layout>
-                    </v-timeline-item>
-            
-                    <v-timeline-item
-                        color="teal lighten-3"
-                        small
-                    >
-                        <v-layout pt-3>
-                        <v-flex xs3>
-                            <strong>11:00</strong>
-                        </v-flex>
-                        <v-flex>
-                            <strong>Lunch break</strong>
-                            <div class="caption mb-2">with Martin Schmol</div>
-                        </v-flex>
-                        </v-layout>
-                    </v-timeline-item>
-            
-                    <v-timeline-item
-                        color="teal lighten-3"
-                        small
-                    >
-                        <v-layout pt-3>
-                        <v-flex xs3>
-                            <strong>17:00</strong>
-                        </v-flex>
-                        <v-flex>
-                            <strong>Daily reminder</strong>
-                            <div class="caption">https://www.google.sk/</div>
-                            <div class="caption">https://www.ornhub.com/</div>
-                        </v-flex>
-                        </v-layout>
-                    </v-timeline-item>
-                    </v-timeline>
-                </v-card-text>
+                <v-card class="mx-auto" max-width="370" style="border-radius: 6px;" >
+                    <v-card light flat>
+                        <v-btn class="white--text" absolute bottom color="#ea4c89" right fab>
+                        <v-icon>fas fa-calendar-alt</v-icon>
+                        </v-btn>
+                        <v-img
+                        src="https://cdn.vuetifyjs.com/images/cards/forest.jpg"
+                        gradient="to top, rgba(255,255,255,.80), rgba(102,97,91,.01)"
+                        style="border-top-left-radius: 6px; border-top-right-radius: 6px;"
+                        >
+                        <v-container fill-height>
+                            <v-layout align-center>
+                            <strong class="display-4 font-weight-regular mr-4">{{ today.day }}</strong>
+                            <v-layout column justify-end>
+                                <div class="headline font-weight-light">{{ today.dayofweek }}</div>
+                                <div class="text-uppercase font-weight-light">{{ today.monthandyear }}</div>
+                            </v-layout>
+                            </v-layout>
+                        </v-container>
+                        </v-img>
+                    </v-card>
+                    <v-card-text class="py-0">
+                        <v-timeline align-top dense>
+                            <calendar-item />
+                        </v-timeline>
+                    </v-card-text>
                 </v-card>    
             </div>    
         </div>
+
     </div>
 </template>
 <script>
     import EventList from './Stats/EventList'
+    import CalendarItem from './Stats/CalendarItem'
+    import moment from "moment"
+    import {DatePicker, TimeSelect, Slider, Tag, Input, Button, Select, Option} from 'element-ui'
     export default {
         components: {
-            'event-list': EventList
+            'event-list': EventList,
+            'calendar-item': CalendarItem,
+            [DatePicker.name]: DatePicker,
+            [TimeSelect.name]: TimeSelect,
+            [Slider.name]: Slider,
+            [Tag.name]: Tag,
+            [Input.name]: Input,
+            [Button.name]: Button,
+            [Option.name]: Option,
+            [Select.name]: Select,
         },
         data () {
             return {
                 dialog: false,
                 searchIsFocused: false,
                 eventsUpcomingFilter: 'important',
+                loader: null,
+                loading4: false,
 
                 filter: {
                     upcoming: true,
@@ -217,12 +178,52 @@
                     tag: '',
                     sort: 'A-Z'
                 },
+                remind: {
+                    itemId: '',
+                    itemName: '',
+                    repeat: null,
+                    timePicker: '',
+                    day: moment().format('DD'),
+                    month: moment().format('MM'),
+                    year: moment().format('YYYY'),
+                    pickerOptions1: {
+                        shortcuts: [{
+                            text: 'Today',
+                            onClick (picker) {
+                            picker.$emit('pick', new Date())
+                            }
+                        },
+                        {
+                            text: 'Tomorrow',
+                            onClick (picker) {
+                            const date = new Date()
+                            date.setTime(date.getTime() + 3600 * 1000 * 24)
+                            picker.$emit('pick', date)
+                            }
+                        },
+                        {
+                            text: 'Next week',
+                            onClick (picker) {
+                            const date = new Date()
+                            date.setTime(date.getTime() + 3600 * 1000 * 24 * 7)
+                            picker.$emit('pick', date)
+                            }
+                        }]
+                        },
+                    datePicker: '',
+                },
+                today: {
+                    day: moment().format('DD'),
+                    dayofweek: moment().format('dddd'),
+                    monthandyear: moment().format('MMMM YYYY'),
+                }
 
             }
         },
         mounted () {
             this.$store.dispatch('loadTags');
             this.$store.dispatch('loadBookmarks');
+            this.$store.dispatch('loadCalendarItems');            
         },
         computed: {
             tags() {
@@ -253,8 +254,38 @@
                 }
             },
             addReminder(item) {
+                this.remind.itemId = item.id;
+                this.remind.itemName = item.name;
                 this.dialog = true;
-            }
+            },
+            saveReminder() {
+                this.loader = 'loading4';
+                this.loading4 = true;
+                if(this.remind.timePicker.length > 0){
+                    this.$store.dispatch('createReminder', {
+                        remind: this.remind
+                    }).then(response => {
+                        this.loader = null;
+                        this.loading4 = false;
+                        this.dialog = false;
+                    }, error => {
+                        console.error(error)
+                    });
+                } else {
+                    this.$notify({
+                        component: {
+                        template: `<span>You need to select a notification time.</span>`
+                        },
+                        icon: 'ti-alert',
+                        horizontalAlign: 'center',
+                        verticalAlign: 'top',
+                        type: 'danger'
+                    })
+                    this.loader = null;
+                    this.loading4 = false;
+                }
+
+            },             
         }
     }
 </script>

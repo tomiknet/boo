@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
   state: {
       bookmarks: [],
       tags: [],
+      calendarItems: [],
   },
   actions: {
         loadBookmarks ({ commit }) {
@@ -55,18 +56,35 @@ export const store = new Vuex.Store({
         })
         },
 
-      addClick ({ commit, state }, props) {
-        //console.log('addclick',props);
-        axios.post('http://book.noviny.live/db/index.php', {
-          request: 'INSERT',
-          query: `INSERT INTO book_r_visits (user_id, bookmark_id, day, month, year)
-                  VALUES ('1', ${props.id}, ${moment().format('DD')}, ${moment().format('MM')}, ${moment().format('YYYY')})
-                    `
-        }).then((response) => {
-          commit('UPDATE_BOOKMARK_CLICKS', props)
-        }).catch((e) => { console.error(e) })
+        loadCalendarItems ({ commit }) {
+            axios.post('http://book.noviny.live/db/index.php', {
+                request: 'SELECT',
+                query: `SELECT a.*, b.bookmark_name, b.bookmark_url 
+                        FROM book_reminders AS a
+                        LEFT JOIN book_bookmarks AS b ON a.bookmark_id=b.ID
+                        WHERE a.user_id = 1
+                        ORDER BY a.year, a.month, a.hour ASC
+                        `
+            }).then((response) => {
+                commit('SET_CALENDARITEMS', response.data)
+            })
+            .catch((e) => {
+                console.error(e)
+            })
+        },        
 
-      },
+        addClick ({ commit, state }, props) {
+            //console.log('addclick',props);
+            axios.post('http://book.noviny.live/db/index.php', {
+            request: 'INSERT',
+            query: `INSERT INTO book_r_visits (user_id, bookmark_id, day, month, year)
+                    VALUES ('1', ${props.id}, ${moment().format('DD')}, ${moment().format('MM')}, ${moment().format('YYYY')})
+                        `
+            }).then((response) => {
+            commit('UPDATE_BOOKMARK_CLICKS', props)
+            }).catch((e) => { console.error(e) })
+
+        },
 
 
       createImage ({ commit, state }, props) {
@@ -78,6 +96,56 @@ export const store = new Vuex.Store({
         })              
 
       },
+
+      createReminder ({ commit, state }, props) {
+
+         return new Promise((resolve, reject) => {
+            let repeatDaily = 0;
+            let repeatMonthly = 0;
+            let repeatWeekly = 0;
+            let repeatYearly = 0;
+
+            var hour = props.remind.timePicker.split(':');
+
+            if(props.remind.repeat == 1) { repeatDaily = 1; }
+            if(props.remind.repeat == 2) { repeatWeekly = 1; }
+            if(props.remind.repeat == 3) { repeatMonthly = 1; }
+            if(props.remind.repeat == 4) { repeatYearly = 1; }
+
+            if(props.remind.datePicker.length > 0){
+                var newDate = props.remind.datePicker.split('.');
+                props.remind.day = newDate[0];
+                props.remind.month = newDate[1];
+                props.remind.year = newDate[2];
+            }
+
+            var dateForDow = moment(props.remind.year + '-' + props.remind.month + '-' + props.remind.day);
+            var dow = dateForDow.day();
+
+            //console.log(props.remind.year);
+            //resolve(props)
+
+            axios.post('http://book.noviny.live/db/index.php', {
+            request: 'INSERT',
+            query: `INSERT INTO book_reminders (user_id, bookmark_id, daily, weekly, monthly, yearly, hour, day, dayofweek, month, year)
+                    VALUES ('1',
+                     ${props.remind.itemId},
+                     ${repeatDaily},
+                     ${repeatWeekly},
+                     ${repeatMonthly},
+                     ${repeatYearly},
+                     '${hour[0]}',
+                     '${props.remind.day}',
+                     '${dow}',
+                     '${props.remind.month}',
+                     '${props.remind.year}'
+                    )`
+            }).then((response) => {
+            resolve(response);
+            }).catch((e) => { console.error(e) })
+
+        })              
+      },      
       
 
       addBookmark ({ commit, state }, props) {
@@ -164,6 +232,9 @@ export const store = new Vuex.Store({
       //console.log('tags-response',response);
       state.tags = response
     },
+    SET_CALENDARITEMS (state, response) {
+      state.calendarItems = response
+    },    
     UPDATE_BOOKMARK_CLICKS (state, props) {
       //console.log('tags-response',response);
       state.bookmarks.forEach( bookmark => {
@@ -217,5 +288,24 @@ export const store = new Vuex.Store({
           //console.log('tagList',tagList);
           return tagList;
         },
+        calendarList: (state) => {
+          var calendarList = state.calendarItems.map( calendarItem => {
+              return {
+                  id: calendarItem.bookmark_id,
+                  name: calendarItem.bookmark_name,
+                  url: calendarItem.bookmark_url,                  
+                  daily: calendarItem.daily,
+                  weekly: calendarItem.weekly,
+                  monthly: calendarItem.monthly,
+                  yearly: calendarItem.yearly,
+                  hour: calendarItem.hour,
+                  day: calendarItem.day,
+                  dayofweek: calendarItem.dayofweek,
+                  month: calendarItem.month,
+                  year: calendarItem.year
+              };
+          });
+          return calendarList;
+        },        
     },
 })
