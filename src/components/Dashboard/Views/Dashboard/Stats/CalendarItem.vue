@@ -121,6 +121,9 @@
                     filteredList[i] = [];
                     var j = 0;
                     var thisDay = moment().add(i, 'days').format('dddd DD.MM.YYYY');
+                    var thisDayNumber = moment().add(i, 'days').format('DD');
+                    var thisMonthNumber = moment().add(i, 'days').format('MM');
+                    var thisYearNumber = moment().add(i, 'days').format('YYYY');
                     var thisDayOfWeek = moment().add(i, 'days').day();
                     this.calendarList.forEach(function(item) {
                         var thisItem = 0;
@@ -131,7 +134,16 @@
                         if (item.weekly == 1 && item.dayofweek == thisDayOfWeek){
                            thisItem = 1;
                         }
-                        
+                        if (item.monthly == 1 && item.day == thisDayNumber){
+                            thisItem = 1;
+                        }
+                        if (item.yearly == 1 && item.day == thisDayNumber && item.month == thisMonthNumber){
+                            thisItem = 1;
+                        }
+                        if (item.daily == 0 && item.weekly == 0 && item.monthly == 0 && item.yearly == 0 && item.day == thisDayNumber && item.month == thisMonthNumber && item.year == thisYearNumber){
+                            thisItem = 1;
+                        }
+
                         if (thisItem == 1){
                           filteredList[i][j] = [];
                           filteredList[i][j]['id'] = item.id; 
