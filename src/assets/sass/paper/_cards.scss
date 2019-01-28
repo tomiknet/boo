@@ -700,7 +700,7 @@
     position: absolute;
     top: 0;
     left: 2em;
-    background: #FE453E;
+    background: #eb5e28;
     color: #fff;
     padding: 0.2em 0.6em;
     padding-bottom: 0;
@@ -719,16 +719,16 @@
 
 .event-card .date-ribbon::before {
     left: 0;
-    border-left:solid 2em #FE453E;
-    border-top: solid 15px #FE453E;
+    border-left:solid 2em #eb5e28;
+    border-top: solid 15px #eb5e28;
     border-bottom: solid 15px transparent;
     border-right: solid 2em transparent;
 }
 
 .event-card .date-ribbon::after {
     right: 0;
-    border-right:solid 2em #FE453E;
-    border-top: solid 15px #FE453E;
+    border-right:solid 2em #eb5e28;
+    border-top: solid 15px #eb5e28;
     border-bottom: solid 15px transparent;
     border-left: solid 2em transparent;
 
