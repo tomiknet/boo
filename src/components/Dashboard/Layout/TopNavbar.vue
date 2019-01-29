@@ -23,21 +23,21 @@
               <p>Stats</p>
             </router-link>
           </li>
-            <drop-down tag="li" title="5" icon="ti-bell">
+            <drop-down tag="li" title="0" icon="ti-bell">
             <li>
               <v-list two-line>
-                <template v-for="(item, index) in notifications.slice(0, 6)">
+                <template v-for="(item, index) in notifications">
                   <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-                  <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
+                  <v-divider v-else-if="item.divider" :inset="item.inset" :key="index" style="margin-top:0px;margin-bottom:0px;"></v-divider>
                   <v-list-tile v-else :key="item.title" avatar @click="">
                     <v-list-tile-avatar>
-                      <v-icon>fas fa-bookmark</v-icon>
+                      <v-icon v-html="item.avatar"></v-icon>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
                       <v-list-tile-title v-html="item.title"></v-list-tile-title>
                       <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
                     </v-list-tile-content>
-                    <v-list-tile-action>
+                    <v-list-tile-action style="flex-direction: row;">
                       <v-btn flat color="#66615b">Done</v-btn>
                       <v-btn flat color="#7ac29a">Visit Now</v-btn>
                     </v-list-tile-action>
@@ -146,16 +146,14 @@
         ],
         notifications: [
           { header: 'Today' },
-          { avatar: 'fas fa-bookmark', title: 'Brunch this weekend?', subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?" },
+          { avatar: 'fas fa-bookmark', title: 'PixelDrain ~ Free file sharing service', subtitle: "https://pixeldrain.com/" },
           { divider: true, inset: true },
-          { avatar: 'fas fa-bookmark', title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>', subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend." },
+          { avatar: 'fas fa-bookmark', title: 'Movie of the Night - Movie Recommender/Suggester', subtitle: "https://www.movieofthenight.com/" },
+          { header: 'Yesterday' },
+          { avatar: 'fas fa-bookmark', title: 'PixelDrain ~ Free file sharing service', subtitle: "https://pixeldrain.com/" },
           { divider: true, inset: true },
-          { avatar: 'fas fa-bookmark', title: 'Oui oui', subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?" },
-          { divider: true, inset: true },
-          { avatar: 'fas fa-bookmark', title: 'Birthday gift', subtitle: "<span class='text--primary'>Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?" },
-          { divider: true, inset: true },
-          { avatar: 'fas fa-bookmark', title: 'Recipe to try', subtitle: "<span class='text--primary'>Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos." }
-        ]
+          { avatar: 'fas fa-bookmark', title: 'Movie of the Night - Movie Recommender/Suggester', subtitle: "https://www.movieofthenight.com/" },
+          ]
       }
     },
     methods: {
